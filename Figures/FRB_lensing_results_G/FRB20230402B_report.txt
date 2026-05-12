@@ -1,0 +1,13 @@
+FRB透镜候选分析报告: FRB20230402B
+============================================================
+分析时间: 2026-04-26 15:08:54
+
+自相关尖峰时间 (ms): [np.float64(3.92)]
+透镜候选: True
+匹配到的峰索引: [np.int64(52), np.int64(55)]
+匹配到的峰对: [(np.int64(52), np.int64(55))]
+是否存在严重频率漂移: False
+dynamic_spectrum: Figures/FRB_lensing_results/FRB20230402B_dynamic_spectrum.png
+autocorr: Figures/FRB_lensing_results/FRB20230402B_autocorr.png
+ks_heatmap: Figures/FRB_lensing_results/FRB20230402B_ks_heatmap.png
+qq_matrix: Figures/FRB_lensing_results/FRB20230402B_qq_matrix.png

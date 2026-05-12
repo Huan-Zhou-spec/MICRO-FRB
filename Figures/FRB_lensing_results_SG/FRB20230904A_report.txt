@@ -1,0 +1,13 @@
+FRB透镜候选分析报告: FRB20230904A
+============================================================
+分析时间: 2026-05-12 20:11:37
+
+自相关尖峰时间 (ms): [np.float64(4.9), np.float64(26.46), np.float64(70.56)]
+透镜候选: True
+匹配到的峰索引: [np.int64(78), np.int64(83)]
+匹配到的峰对: [(np.int64(78), np.int64(83))]
+是否存在严重频率漂移: False
+dynamic_spectrum: Figures/FRB_lensing_results/FRB20230904A_dynamic_spectrum.png
+autocorr: Figures/FRB_lensing_results/FRB20230904A_autocorr.png
+ks_heatmap: Figures/FRB_lensing_results/FRB20230904A_ks_heatmap.png
+qq_matrix: Figures/FRB_lensing_results/FRB20230904A_qq_matrix.png

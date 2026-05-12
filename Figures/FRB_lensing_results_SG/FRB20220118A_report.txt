@@ -1,0 +1,13 @@
+FRB透镜候选分析报告: FRB20220118A
+============================================================
+分析时间: 2026-05-12 20:09:44
+
+自相关尖峰时间 (ms): [np.float64(8.82)]
+透镜候选: True
+匹配到的峰索引: [np.int64(79), np.int64(89)]
+匹配到的峰对: [(np.int64(79), np.int64(89))]
+是否存在严重频率漂移: False
+dynamic_spectrum: Figures/FRB_lensing_results/FRB20220118A_dynamic_spectrum.png
+autocorr: Figures/FRB_lensing_results/FRB20220118A_autocorr.png
+ks_heatmap: Figures/FRB_lensing_results/FRB20220118A_ks_heatmap.png
+qq_matrix: Figures/FRB_lensing_results/FRB20220118A_qq_matrix.png

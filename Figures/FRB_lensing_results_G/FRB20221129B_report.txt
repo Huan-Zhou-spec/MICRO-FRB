@@ -1,0 +1,13 @@
+FRB透镜候选分析报告: FRB20221129B
+============================================================
+分析时间: 2026-04-26 15:08:25
+
+自相关尖峰时间 (ms): [np.float64(7.84)]
+透镜候选: True
+匹配到的峰索引: [np.int64(154), np.int64(156), np.int64(163)]
+匹配到的峰对: [(np.int64(154), np.int64(163)), (np.int64(156), np.int64(163))]
+是否存在严重频率漂移: False
+dynamic_spectrum: Figures/FRB_lensing_results/FRB20221129B_dynamic_spectrum.png
+autocorr: Figures/FRB_lensing_results/FRB20221129B_autocorr.png
+ks_heatmap: Figures/FRB_lensing_results/FRB20221129B_ks_heatmap.png
+qq_matrix: Figures/FRB_lensing_results/FRB20221129B_qq_matrix.png

@@ -1,0 +1,17 @@
+frb_name,lens_candidate,num_spikes,matched_peak_indices,matched_pairs,has_drift,report_file
+FRB20190131D,True,1,"[np.int64(76), np.int64(85)]","[(np.int64(76), np.int64(85))]",False,Figures/FRB_lensing_results/FRB20190131D_report.txt
+FRB20190915E,True,1,"[np.int64(77), np.int64(80)]","[(np.int64(77), np.int64(80))]",False,Figures/FRB_lensing_results/FRB20190915E_report.txt
+FRB20191219B,True,1,"[np.int64(65), np.int64(98)]","[(np.int64(65), np.int64(98))]",False,Figures/FRB_lensing_results/FRB20191219B_report.txt
+FRB20200603B,True,1,"[np.int64(76), np.int64(86)]","[(np.int64(76), np.int64(86))]",False,Figures/FRB_lensing_results/FRB20200603B_report.txt
+FRB20200706A,True,1,"[np.int64(74), np.int64(78), np.int64(83), np.int64(87)]","[(np.int64(74), np.int64(83)), (np.int64(78), np.int64(87))]",False,Figures/FRB_lensing_results/FRB20200706A_report.txt
+FRB20200707A,True,1,"[np.int64(76), np.int64(85)]","[(np.int64(76), np.int64(85))]",False,Figures/FRB_lensing_results/FRB20200707A_report.txt
+FRB20210130C,True,1,"[np.int64(79), np.int64(83), np.int64(87)]","[(np.int64(79), np.int64(83)), (np.int64(83), np.int64(87))]",False,Figures/FRB_lensing_results/FRB20210130C_report.txt
+FRB20210220B,True,1,"[np.int64(71), np.int64(92)]","[(np.int64(71), np.int64(92))]",False,Figures/FRB_lensing_results/FRB20210220B_report.txt
+FRB20211115A,True,1,"[np.int64(78), np.int64(85)]","[(np.int64(78), np.int64(85))]",False,Figures/FRB_lensing_results/FRB20211115A_report.txt
+FRB20220118A,True,1,"[np.int64(79), np.int64(89)]","[(np.int64(79), np.int64(89))]",False,Figures/FRB_lensing_results/FRB20220118A_report.txt
+FRB20220225C,True,1,"[np.int64(48), np.int64(58)]","[(np.int64(48), np.int64(58))]",False,Figures/FRB_lensing_results/FRB20220225C_report.txt
+FRB20220424C,True,1,"[np.int64(77), np.int64(84)]","[(np.int64(77), np.int64(84))]",False,Figures/FRB_lensing_results/FRB20220424C_report.txt
+FRB20220910A,True,2,"[np.int64(77), np.int64(81), np.int64(85)]","[(np.int64(77), np.int64(81)), (np.int64(81), np.int64(85)), (np.int64(77), np.int64(85))]",False,Figures/FRB_lensing_results/FRB20220910A_report.txt
+FRB20221129B,True,1,"[np.int64(154), np.int64(156), np.int64(163)]","[(np.int64(154), np.int64(163)), (np.int64(156), np.int64(163))]",False,Figures/FRB_lensing_results/FRB20221129B_report.txt
+FRB20230402B,True,1,"[np.int64(52), np.int64(55)]","[(np.int64(52), np.int64(55))]",False,Figures/FRB_lensing_results/FRB20230402B_report.txt
+FRB20230904A,True,3,"[np.int64(78), np.int64(83)]","[(np.int64(78), np.int64(83))]",False,Figures/FRB_lensing_results/FRB20230904A_report.txt

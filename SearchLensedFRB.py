@@ -31,6 +31,12 @@ def analyze_lensing_candidate(frb_name, data_dir="FRB_data/canfar_downloads/",
                               smooth_sigma=3, threshold=3, n_peaks_list=[5,7],
                               n_noise=30, n_bootstrap=1000, random_seed=42,
                               save_figure=True, show_plots=False):
+    """
+    分析单个FRB是否为透镜候选体。
+    新增判断：
+    1. 匹配峰对中，前峰SNR必须≥后峰SNR，且后峰SNR必须≥10，否则排除。
+    2. 匹配到的所有峰对中必须包含最高SNR的峰，否则排除。
+    """
     os.makedirs(output_dir, exist_ok=True)
     np.random.seed(random_seed)
 
@@ -57,6 +63,7 @@ def analyze_lensing_candidate(frb_name, data_dir="FRB_data/canfar_downloads/",
     matched_peak_indices = []
     matched_pairs = []
     peak_indices = []
+    snr_peaks = []   # 初始化
 
     if not spike_times:
         print(f"{frb_name}: 无自相关尖峰，排除透镜候选")
@@ -68,7 +75,7 @@ def analyze_lensing_candidate(frb_name, data_dir="FRB_data/canfar_downloads/",
         for n_peaks in n_peaks_list:
             peaks = calculate_snr_peaks(ts, n=n_peaks, adaptive=True)
             tmp_indices = peaks['peak_indices']
-            snr_peaks = peaks['snr_values']
+            snr_peaks = peaks['snr_values']   # 注意：这里会覆盖，但仅在匹配成功时有意义
             pairs = []
             for i in range(len(tmp_indices)):
                 for j in range(i+1, len(tmp_indices)):
@@ -87,83 +94,111 @@ def analyze_lensing_candidate(frb_name, data_dir="FRB_data/canfar_downloads/",
         else:
             default_peaks = calculate_snr_peaks(ts, n=n_peaks_list[1], adaptive=True)
             peak_indices = default_peaks['peak_indices']
+            snr_peaks = []   # 无匹配时清空，后面不会用到
             print(f"  未匹配到峰对，使用检测到的 {len(peak_indices)} 个峰值")
 
         # 3. 漂移判断（仅针对匹配到的峰对）
         if matched_pairs:
-            # ----- 新增：SNR 顺序检查（前峰 SNR 必须 >= 后峰 SNR，否则排除）-----
-            idx_to_snr = {idx: snr for idx, snr in zip(peak_indices, snr_peaks)}
-            snr_order_ok = True
-            for (idx_i, idx_j) in matched_pairs:
-                snr_i = idx_to_snr.get(idx_i)
-                snr_j = idx_to_snr.get(idx_j)
-                if snr_i is not None and snr_j is not None and snr_i < snr_j:
-                    snr_order_ok = False
-                    print(f"  峰对 ({idx_i}, {idx_j}) 的 SNR 顺序错误：前峰 SNR={snr_i:.2f} < 后峰 SNR={snr_j:.2f}，排除透镜候选")
-                    break
-            if not snr_order_ok:
+            # ========== 新增：最高SNR峰必须包含在匹配峰对中 ==========
+            if not snr_peaks:
+                print("  匹配到峰对但SNR信息缺失，排除透镜候选")
                 exclude = True
                 lens_candidate = False
                 has_drift = False
-                # 跳过后续漂移判断
             else:
-                # ----- 原有漂移判断逻辑 -----
-                all_matched_indices = sorted(set([idx for pair in matched_pairs for idx in pair]))
-                if len(all_matched_indices) < 2:
-                    print("  匹配峰对数量不足，无法进行漂移判断，保留候选")
-                    lens_candidate = True
+                max_snr_idx = peak_indices[np.argmax(snr_peaks)]
+                all_matched_indices_set = set([idx for pair in matched_pairs for idx in pair])
+                if max_snr_idx not in all_matched_indices_set:
+                #if False:   # 原来条件改为 False
+                    print(f"  匹配到的峰对中没有包含最高SNR的峰（峰索引{max_snr_idx}），排除透镜候选")
+                    exclude = True
+                    lens_candidate = False
+                    has_drift = False
                 else:
-                    # 提取频谱
-                    spectra_info = extract_peak_spectra(proc_data, all_matched_indices, time_window=None)
-                    freq_axis = spectra_info['frequencies']
-                    spectra_list = spectra_info['peak_spectra']
-                    idx_to_pos = {idx: pos for pos, idx in enumerate(all_matched_indices)}
+                    # ----- 原有的 SNR 顺序检查 + 后峰 SNR ≥ 10 检查 -----
+                    idx_to_snr = {idx: snr for idx, snr in zip(peak_indices, snr_peaks)}
+                    snr_order_ok = True
+                    snr_low_ok = True   # 后峰 SNR 是否均 >= 10
+                    for (idx_i, idx_j) in matched_pairs:
+                        snr_i = idx_to_snr.get(idx_i)
+                        snr_j = idx_to_snr.get(idx_j)
+                        if snr_i is None or snr_j is None:
+                            snr_order_ok = False
+                            print(f"  峰对 ({idx_i}, {idx_j}) 的 SNR 信息缺失，排除透镜候选")
+                            break
+                        if snr_i < snr_j:
+                            snr_order_ok = False
+                            print(f"  峰对 ({idx_i}, {idx_j}) 的 SNR 顺序错误：前峰 SNR={snr_i:.2f} < 后峰 SNR={snr_j:.2f}，排除透镜候选")
+                            break
+                        if snr_j < 10:
+                            snr_low_ok = False
+                            print(f"  峰对 ({idx_i}, {idx_j}) 的后峰 SNR={snr_j:.2f} < 10，排除透镜候选")
+                            break
 
-                    noise_result = extract_noise_spectra(
-                        proc_data, n_noise=n_noise, noise_method='quantile',
-                        quantile_threshold=0.25, allow_oversample=True
-                    )
-                    noise_spectra = noise_result['noise_spectra']
-
-                    res_ks = compare_spectra_ks(
-                        spectra_list, freq_axis=freq_axis, noise_samples=noise_spectra,
-                        bootstrap=True, bootstrap_method='add_noise',
-                        n_bootstrap=n_bootstrap, random_seed=random_seed,
-                        return_extra=True
-                    )
-                    shift_mat = res_ks['D_matrix']
-                    ci_high = res_ks.get('D_ci_upper', None)
-
-                    if ci_high is not None:
-                        all_pairs_drift = True
-                        for idx_i, idx_j in matched_pairs:
-                            pos_i = idx_to_pos[idx_i]
-                            pos_j = idx_to_pos[idx_j]
-                            D = shift_mat[pos_i, pos_j]
-                            if hasattr(ci_high, 'shape') and len(ci_high.shape) == 2:
-                                thresh = ci_high[pos_i, pos_j]
-                            else:
-                                thresh = ci_high
-                            if D > thresh and D > min_diff_threshold:
-                                continue
-                            else:
-                                all_pairs_drift = False
-                                break
-                        if all_pairs_drift:
-                            has_drift = True
-                            exclude = True
-                            print("  所有匹配峰对均存在严重频率漂移，排除透镜候选")
-                        else:
-                            lens_candidate = True
+                    if not (snr_order_ok and snr_low_ok):
+                        exclude = True
+                        lens_candidate = False
+                        has_drift = False
                     else:
-                        print("  无置信区间信息，无法判断频率漂移，保留候选")
-                        lens_candidate = True
+                        # ----- 原有漂移判断逻辑 -----
+                        all_matched_indices = sorted(set([idx for pair in matched_pairs for idx in pair]))
+                        if len(all_matched_indices) < 2:
+                            print("  匹配峰对数量不足，无法进行漂移判断")
+                            exclude = True
+                            lens_candidate = False
+                            has_drift = False
+                        else:
+                            # 提取频谱
+                            spectra_info = extract_peak_spectra(proc_data, all_matched_indices, time_window=None)
+                            freq_axis = spectra_info['frequencies']
+                            spectra_list = spectra_info['peak_spectra']
+                            idx_to_pos = {idx: pos for pos, idx in enumerate(all_matched_indices)}
+
+                            noise_result = extract_noise_spectra(
+                                proc_data, n_noise=n_noise, noise_method='quantile',
+                                quantile_threshold=0.25, allow_oversample=True
+                            )
+                            noise_spectra = noise_result['noise_spectra']
+
+                            res_ks = compare_spectra_ks(
+                                spectra_list, freq_axis=freq_axis, noise_samples=noise_spectra,
+                                bootstrap=True, bootstrap_method='add_noise',
+                                n_bootstrap=n_bootstrap, random_seed=random_seed,
+                                return_extra=True
+                            )
+                            shift_mat = res_ks['D_matrix']
+                            ci_high = res_ks.get('D_ci_upper', None)
+
+                            if ci_high is not None:
+                                all_pairs_drift = True
+                                for idx_i, idx_j in matched_pairs:
+                                    pos_i = idx_to_pos[idx_i]
+                                    pos_j = idx_to_pos[idx_j]
+                                    D = shift_mat[pos_i, pos_j]
+                                    if hasattr(ci_high, 'shape') and len(ci_high.shape) == 2:
+                                        thresh = ci_high[pos_i, pos_j]
+                                    else:
+                                        thresh = ci_high
+                                    if D > thresh and D > min_diff_threshold:
+                                        continue
+                                    else:
+                                        all_pairs_drift = False
+                                        break
+                                if all_pairs_drift:
+                                    has_drift = True
+                                    exclude = True
+                                    print("  所有匹配峰对均存在严重频率漂移，排除透镜候选")
+                                else:
+                                    lens_candidate = True
+                            else:
+                                print("  无置信区间信息，无法判断频率漂移，保留候选")
+                                lens_candidate = True
         else:
             print("  未匹配到任何峰对，跳过漂移判断，不保留候选")
             exclude = True
             lens_candidate = False
 
-    # 4. 保存图片和报告
+    # 4. 保存图片和报告（仅当未排除时）
     output_paths = {}
     report_file = None
 
@@ -236,8 +271,7 @@ def analyze_lensing_candidate(frb_name, data_dir="FRB_data/canfar_downloads/",
                 highlight_pairs = [(i, j) for i in range(N_plot) for j in range(i+1, N_plot) if highlight_mask[i, j]]
             else:
                 highlight_pairs = None
-            fig_qq = plot_qq_matrix(samples_list_plot, highlight_pairs=highlight_pairs,
-                                    show_legend=True, same_scale=True)
+            fig_qq = plot_qq_matrix(samples_list_plot, highlight_pairs=highlight_pairs)
             if fig_qq is not None:
                 save_path = os.path.join(output_dir, f"{frb_name}_qq_matrix.png")
                 fig_qq.savefig(save_path, dpi=150, bbox_inches='tight')
@@ -272,8 +306,6 @@ def analyze_lensing_candidate(frb_name, data_dir="FRB_data/canfar_downloads/",
         'output_paths': output_paths,
         'report_file': report_file
     }
-
-
 def generate_lens_report(results, output_dir):
     """只保留未被剔除（即有尖峰且无漂移）的 FRB 信息"""
     valid = [r for r in results if r.get('status') == 'success' and r.get('report_file')]
