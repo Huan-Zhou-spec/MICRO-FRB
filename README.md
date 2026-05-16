@@ -9,13 +9,12 @@ Micro-Lensing_FRB/
     ├── read_data.py                     # Read the data from CHIME/FRB and classify it
     ├── smooth_data.py                   # Smooth processing of FRB dynamic spectrum data
     ├── fpbh_data.py                     # constraints on PBH
+    ├── hardness_data.py                 # Hardness test
     
-                
-└── FRB_data.py                          # The main function for classifying and downloading FRB data
-└── FRB_Plots.py                         # The main functions for various drawing programs
+        
 └── SearchLensedFRB.py                   # Based on the point mass lensing model, selecting micro-lensing candidates
 └── fpbh.py                              # constraints on PBH with the CHIME/FRB catalog2 data
-└── 
+└── Hardness_test.py                     # Hardness test on candidates
 
     
 └── FRB_data                             # All input and output data sets
@@ -25,8 +24,8 @@ Micro-Lensing_FRB/
     
 
 └── Figures                            # The collection of all output graphs
-    ├──canfar_downloads                # The dynamic spectrograms of more than 340 peak structures of FRB (Fast Radio Burst) downloaded from the CHIME/FRB website        
-    ├──FRB_lensing_results             # The 14 candidate analysis diagrams that were initially selected
+    ├──FRB_lensing_results_G           # The candidate analysis diagrams that were initially selected (Gaussian-smooth)
+    ├──FRB_lensing_results_SG          # The candidate analysis diagrams that were initially selected ( Savitzky–Golay-smooth)
 
 
 └──fpbh_bound                          # Various constraints on PBH
