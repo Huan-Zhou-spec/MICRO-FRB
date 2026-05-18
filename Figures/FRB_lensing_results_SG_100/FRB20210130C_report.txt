@@ -1,0 +1,13 @@
+FRB透镜候选分析报告: FRB20210130C
+============================================================
+分析时间: 2026-05-18 14:57:49
+
+自相关尖峰时间 (ms): [np.float64(2.94)]
+透镜候选: True
+匹配到的峰索引: [np.int64(79), np.int64(83), np.int64(87)]
+匹配到的峰对: [(np.int64(79), np.int64(83)), (np.int64(83), np.int64(87))]
+是否存在严重频率漂移: False
+dynamic_spectrum: Figures/FRB_lensing_results/FRB20210130C_dynamic_spectrum.png
+autocorr: Figures/FRB_lensing_results/FRB20210130C_autocorr.png
+ks_heatmap: Figures/FRB_lensing_results/FRB20210130C_ks_heatmap.png
+qq_matrix: Figures/FRB_lensing_results/FRB20210130C_qq_matrix.png

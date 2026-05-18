@@ -1,0 +1,13 @@
+FRB透镜候选分析报告: FRB20230708C
+============================================================
+分析时间: 2026-05-18 14:59:37
+
+自相关尖峰时间 (ms): [np.float64(48.019999999999996), np.float64(50.96)]
+透镜候选: True
+匹配到的峰索引: [np.int64(57), np.int64(105)]
+匹配到的峰对: [(np.int64(57), np.int64(105))]
+是否存在严重频率漂移: False
+dynamic_spectrum: Figures/FRB_lensing_results/FRB20230708C_dynamic_spectrum.png
+autocorr: Figures/FRB_lensing_results/FRB20230708C_autocorr.png
+ks_heatmap: Figures/FRB_lensing_results/FRB20230708C_ks_heatmap.png
+qq_matrix: Figures/FRB_lensing_results/FRB20230708C_qq_matrix.png

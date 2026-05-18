@@ -1,0 +1,13 @@
+FRB透镜候选分析报告: FRB20191219B
+============================================================
+分析时间: 2026-05-18 14:56:51
+
+自相关尖峰时间 (ms): [np.float64(32.339999999999996), np.float64(34.3)]
+透镜候选: True
+匹配到的峰索引: [np.int64(65), np.int64(98)]
+匹配到的峰对: [(np.int64(65), np.int64(98)), (np.int64(65), np.int64(98))]
+是否存在严重频率漂移: False
+dynamic_spectrum: Figures/FRB_lensing_results/FRB20191219B_dynamic_spectrum.png
+autocorr: Figures/FRB_lensing_results/FRB20191219B_autocorr.png
+ks_heatmap: Figures/FRB_lensing_results/FRB20191219B_ks_heatmap.png
+qq_matrix: Figures/FRB_lensing_results/FRB20191219B_qq_matrix.png

@@ -1,0 +1,13 @@
+FRB透镜候选分析报告: FRB20190915E
+============================================================
+分析时间: 2026-05-18 14:56:44
+
+自相关尖峰时间 (ms): [np.float64(2.94)]
+透镜候选: True
+匹配到的峰索引: [np.int64(77), np.int64(80)]
+匹配到的峰对: [(np.int64(77), np.int64(80))]
+是否存在严重频率漂移: False
+dynamic_spectrum: Figures/FRB_lensing_results/FRB20190915E_dynamic_spectrum.png
+autocorr: Figures/FRB_lensing_results/FRB20190915E_autocorr.png
+ks_heatmap: Figures/FRB_lensing_results/FRB20190915E_ks_heatmap.png
+qq_matrix: Figures/FRB_lensing_results/FRB20190915E_qq_matrix.png
