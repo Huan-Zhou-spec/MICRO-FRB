@@ -931,7 +931,7 @@ def detect_autocorr_spikes(autocorr, lags, smooth_sigma=3.0, threshold=3.0,
     y_smooth = gaussian_filter1d(y, sigma=smooth_sigma, mode='reflect')
     
     # Savitzky-Golay光滑
-    #y_smooth = savgol_filter(y, window_length=20, polyorder=3, deriv=0, mode='interp')
+    #y_smooth = savgol_filter(y, window_length=100, polyorder=3, deriv=0, mode='interp')
 
     # 残差
     residuals = y - y_smooth

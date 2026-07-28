@@ -18,7 +18,9 @@ from .analysis_data import (process_data_ts, calculate_snr_peaks,
                             compare_spectra_ks, compute_autocorr_with_spikes)
 from .smooth_data import smooth_time_dimension, find_optimal_time_smooth, smooth_frb_data
 
-from .hardness_data import extract_with_fwhm, net_intensity_and_error, hardness_ratio_ml_hm, lens_mass
+from .hardness_data import (extract_with_fwhm, net_intensity_and_error, 
+                    hardness_ratio, compare_hardness_ratios, lens_mass)
+
 
 from .fpbh_data import load_and_clean_data, fpbh
 __version__ = '1.0.0'
