@@ -318,7 +318,7 @@ Two self-contained analysis scripts are provided for the strongest candidates:
 
 | File | Target FRB | Δt (ms) | Sub-band config | Analysis performed |
 |------|------------|---------|-----------------|--------------------|
-| `FRB20190131D.py` | FRB 20190131D | 8.82 | k_HR = 7 (9 bands) | HR consistency + sub-band ACF + estimated lens mass M_L(1+z_L) ≈ 466.5 M_sun |
+| `FRB20190131D.py` | FRB 20190131D | 8.82 | k_HR = 2 (4 bands) | HR consistency + sub-band ACF + estimated lens mass M_L(1+z_L) ≈ 466.5 M_sun |
 | `FRB20211115A.py` | FRB 20211115A | 6.86 | k_HR = 2 (4 bands) | HR consistency + sub-band ACF + scaled waveform superposition (peak2 → peak4) + M_L(1+z_L) ≈ 609 M_sun |
 
 In addition, [FRB20211115A.py](file:///home/ubuntu/桌面/LenFRB_test/课题7：FRB_catalog_2-PBH/Micro-Lensing_FRB/FRB20211115A.py#L72-L262) contains an enhanced `plot_dynamic_spectrum()` that takes a user-specified time region, scales it by magnification factor `Rf=1.77`, shifts it horizontally and re-plots as a dashed red curve directly on top of the later peak — a visual check of the lensing "shape invariance" after noise-bias correction with `B2`.
