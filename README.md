@@ -1,8 +1,8 @@
 # Micro-Lensing_FRB
 
-**Identification of Point-Mass Microlensed Fast Radio Bursts from CHIME/FRB Catalog 2 and Constraints on Primordial Black Holes (PBHs)**
+**Evidence for Intermediate-Mass Black Holes From Microlensing Signatures in CHIME/FRB Catalog 2** 
 
-This project selects multi-component Fast Radio Burst (FRB) candidates from the **Second CHIME/FRB Catalog (Catalog 2, 4539 sources)** that are potentially microlensed by compact point-mass objects (e.g. Primordial Black Holes, PBHs) along the line of sight. A non-detection of significant lensing pairs across the full sample is then used to derive a statistical upper bound on the cosmic fraction of PBHs, **f_PBH(M_L)**, as a function of the lens mass.
+This project selects multi-component Fast Radio Burst (FRB) candidates from the **Second CHIME/FRB Catalog (Catalog 2, 4539 sources)** that are potentially microlensed by compact point-mass objects (e.g. Primordial Black Holes, PBHs) along the line of sight. A non-detection of significant lensing pairs across the full sample is then used to derive a statistical upper bound on the cosmic fraction of PBHs, **f_PBH(M_PBH)**, as a function of the lens mass.
 
 ---
 
@@ -95,25 +95,54 @@ Default download locations: `FRB_data/canfar_downloads/` (HDF5) or `Figures/canf
 
 ### Dependencies
 
-```text
-python >= 3.9
-numpy
-scipy
-matplotlib
-pandas
-h5py
-colossus   # for cosmology distances (Planck 2018)
-```
+| # | Package | Version | Install Method | Purpose |
+|---|---------|---------|---------------|---------|
+| 1 | `numpy` | >= 1.24 | conda / pip | Numerical computation, array operations |
+| 2 | `scipy` | >= 1.10 | conda / pip | Signal processing (find_peaks, SG filter), statistics (KS test), integration |
+| 3 | `matplotlib` | >= 3.7 | conda / pip | All plotting (dynamic spectra, ACF, heatmaps, f_PBH curves) |
+| 4 | `pandas` | >= 2.0 | conda / pip | Tabular data handling, CSV export |
+| 5 | `h5py` | >= 3.8 | conda / pip | Reading HDF5 dynamic spectrum data |
+| 6 | `colossus` | >= 2.0.6 | **pip only** | Cosmological distances & Hubble parameter (Planck 2018) |
 
-### Installation
+### Installation — Choose One Method
+
+#### Method A: Conda (Recommended for local development)
+
+`environment.yml` manages the full environment including Python version and C-level dependencies (HDF5, FFTW, etc.):
 
 ```bash
-# Recommended: conda environment
+conda env create -f environment.yml
+conda activate frb_microlens
+```
+
+#### Method B: Pip / Virtual Environment
+
+`requirements.txt` provides a minimal dependency list for pip-based setups (CI/CD, Docker, Google Colab):
+
+```bash
+python -m venv frb_lens
+source frb_lens/bin/activate   # Linux/macOS
+# frb_lens\Scripts\activate    # Windows
+pip install -r requirements.txt
+```
+
+#### Method C: Manual Conda Setup
+
+```bash
 conda create -n frb_lens python=3.11
 conda activate frb_lens
 conda install numpy scipy matplotlib pandas h5py
 pip install colossus
 ```
+
+### Why Both Files Are Included
+
+| Scenario | Recommended File | Reason |
+|----------|----------------|--------|
+| conda users, local reproducible dev | `environment.yml` | Automatically resolves C-library deps (HDF5, FFTW); one command recreates the full environment |
+| CI/CD pipelines (GitHub Actions, etc.) | `requirements.txt` | CI systems default to `pip install -r` |
+| Docker / slim containers | `requirements.txt` | Smaller image; no conda overhead |
+| Google Colab / Kaggle / cloud platforms | `requirements.txt` | Only pip is available |
 
 ### Note on `colossus`
 
@@ -176,7 +205,9 @@ Micro-Lensing_FRB/
 │   ├── FRB_fpbh_vs_ML.txt            # f_PBH(M_L) data computed by this work
 │   └── fpbh.pdf                      # Multi-experiment combined exclusion plot
 │
-├── 2605.19653v2.pdf                  # Reference paper (arXiv:2605.19653)
+├── requirements.txt                  # Python dependencies
+├── .gitignore                        # Git ignore rules
+├── CITATION.cff                      # Academic citation metadata
 ├── LICENSE                           # MIT License
 └── README.md
 ```
@@ -444,10 +475,9 @@ Each lensing-result directory contains the following per-FRB files when a candid
 ---
 
 ## References
-
+- "Huan Zhou, Zhengxiang Li, Cheng-Gang Shao, et al. (2025). Evidence for Intermediate-Mass Black Holes From Microlensing Signatures in CHIME/FRB Catalog 2. arXiv:2605.19653"
 - **CHIME/FRB Catalog 2 Data Release (CANFAR)** –
   <https://www.canfar.net/storage/list/AstroDataCitationDOI/CISTI.CANFAR/25.0066/data>
-- **CHIME/FRB Collaboration et al. (2025)** – *The Second CHIME/FRB Catalog*, arXiv:2605.19653 (see `2605.19653v2.pdf` in the repository root).
 - **Point-mass lensing time delay + PBH constraints** – please cite the specific references in your field (e.g., earlier works by Muñoz, Kashlinsky, Dai & Venumadhav, etc.; fill in the arXiv/DOI identifiers specific to your paper draft).
 - **colossus** cosmology library – <https://bdiemer.bitbucket.io/colossus/>
 

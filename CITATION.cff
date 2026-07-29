@@ -1,0 +1,25 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+title: "Evidence for Intermediate-Mass Black Holes From Microlensing Signatures in CHIME/FRB Catalog 2"
+type: software
+repository-code: ""
+version: "1.2.0"
+date-released: "2026-07-29"
+license: "MIT"
+url: ""
+authors:
+  - family-names: "Len"
+    given-names: ""
+    orcid: ""
+keywords:
+  - fast radio burst
+  - FRB
+  - gravitational lensing
+  - microlensing
+  - primordial black hole
+  - PBH
+  - CHIME/FRB Catalog 2
+  - cosmic microwave background
+  - dark matter
+reference:
+  - "Huan Zhou, Zhengxiang Li, Cheng-Gang Shao, et al. (2025). Evidence for Intermediate-Mass Black Holes From Microlensing Signatures in CHIME/FRB Catalog 2. arXiv:2605.19653"
