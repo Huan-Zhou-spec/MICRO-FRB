@@ -1,9 +1,9 @@
-cff-version: 1.2.0
+cff-version: 1.0.0
 message: "If you use this software, please cite it as below."
 title: "Evidence for Intermediate-Mass Black Holes From Microlensing Signatures in CHIME/FRB Catalog 2"
 type: software
 repository-code: "https://github.com/LenFRB/Micro-Lensing_FRB"
-version: "1.2.0"
+version: "1.0.0"
 date-released: "2026-07-29"
 license: "MIT"
 url: "https://github.com/LenFRB/Micro-Lensing_FRB"
