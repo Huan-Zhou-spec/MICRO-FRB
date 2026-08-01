@@ -135,24 +135,9 @@ conda install numpy scipy matplotlib pandas h5py
 pip install colossus
 ```
 
-### Why Both Files Are Included
-
-| Scenario | Recommended File | Reason |
-|----------|----------------|--------|
-| conda users, local reproducible dev | `environment.yml` | Automatically resolves C-library deps (HDF5, FFTW); one command recreates the full environment |
-| CI/CD pipelines (GitHub Actions, etc.) | `requirements.txt` | CI systems default to `pip install -r` |
-| Docker / slim containers | `requirements.txt` | Smaller image; no conda overhead |
-| Google Colab / Kaggle / cloud platforms | `requirements.txt` | Only pip is available |
-
 ### Note on `colossus`
 
-`colossus` provides the comoving-distance / Hubble-parameter functions used inside the lensing optical-depth integral via
-
-```python
-cosmology.setCosmology('planck18')
-```
-
-If `colossus` cannot be installed on your system, an equivalent implementation using `astropy.cosmology.FlatLambdaCDM` can be swapped in by replacing the `cosmo.comovingDistance` calls in [modules/fpbh_data.py](file:///home/ubuntu/Desktop/MICRO-FRB/modules/fpbh_data.py).
+`colossus` provides comoving-distance functions for the lensing optical-depth integral. If unavailable, an equivalent implementation using `astropy.cosmology.FlatLambdaCDM` can be swapped in via [modules/fpbh_data.py](file:///home/ubuntu/Desktop/MICRO-FRB/modules/fpbh_data.py).
 
 ---
 
@@ -166,47 +151,36 @@ Micro-Lensing_FRB/
 │   ├── load_data.py                  # CANFAR batch downloader (urllib / wget / auto)
 │   ├── plot_data.py                  # All plotting: scatter, dynamic spectrum, ACF, KS heatmap, QQ
 │   ├── analysis_data.py              # Peak finding, spectral extraction, KS test, ACF spikes
-│   ├── smooth_data.py                # Smoothing primitives (boxcar / Savitzky–Golay / adaptive)
+│   ├── smooth_data.py                # Smoothing primitives (boxcar / Gaussian / adaptive)
 │   ├── hardness_data.py              # FWHM windowing + k+2 sub-band hardness-ratio test
 │   └── fpbh_data.py                  # Integrates lensing optical depth → f_PBH(M_L)
 │
 ├── FRB_data.py                       # Step 1+2: catalog subsetting + CANFAR download CLI
 ├── SearchLensedFRB.py                # Step 3: batch lensing selection for 340 FRBs
 ├── Hardness_test.py                  # Step 4: single-source hardness-ratio demo (FRB 20190131D)
-├── fpbh.py                           # Step 6: f_PBH vs. M_L plot vs. LSS/Dyn/Accretion/LIGO/OGLE
+├── fpbh.py                           # Step 6: f_PBH vs. M_L summary plot
 ├── FRB20190131D.py                   # Candidate 1 deep dive (HR + sub-band ACF + lens mass)
 ├── FRB20211115A.py                   # Candidate 2 deep dive (HR + ACF + waveform superposition)
 │
 ├── FRB_data/
-│   ├── CHIME_cat2_frb/               # Catalog 2 data + subsets
-│   │   ├── chimefrbcat2.npy          # Raw catalog (4539 rows)
-│   │   ├── chimefrbcat2_duplicates.npy
-│   │   ├── chimefrbcat2_first_duplicates.npy
-│   │   ├── chimefrbcat2_unique.npy
-│   │   ├── chimefrbcat2_unique_first_repeaters.npy
-│   │   ├── chimefrbcat2_unique_repeater.npy
-│   │   └── chimefrbcat2_unique_non_repeater.npy
-│   └── canfar_downloads/             # 340 HDF5 dynamic spectra from CANFAR
+│   ├── CHIME_cat2_frb/               # Catalog 2 data + subsets (.npy files)
+│   └── canfar_downloads/             # 340 HDF5 dynamic spectra (downloaded from CANFAR)
 │
 ├── Figures/
-│   ├── CHIME_cata2/                  # Catalog-level plots (DM/width/SNR/redshift)
-│   ├── canfar_downloads/             # 340 PDF dynamic spectrum plots from CANFAR
-│   ├── FRB_autocorr/                 # ~300 single-source ACF PNGs (all 340 FRBs)
-│   ├── FRB_output_ds/                # 340 dynamic spectrum PDF outputs
-│   ├── FRB_drift/                    # Spectral drift analysis: heatmaps + QQ matrices
-│   ├── FRB_lensing_results_SG_10/    # Lensing pipeline with SG smoothing (window=10)
-│   ├── FRB_lensing_results_SG_20/    # Lensing pipeline with SG smoothing (window=20)
-│   ├── FRB_lensing_results_SG_30/    # Lensing pipeline with SG smoothing (window=30)
-│   ├── FRB_lensing_results_SG_100/   # Lensing pipeline with SG smoothing (window=100)
-│   └── FRB_lensing_results_G_3/      # Lensing pipeline with Gaussian smoothing (σ=3)
+│   ├── CHIME_cata2/                  # Catalog-level plots
+│   ├── FRB_lensing_results_SG_20/    # Lensing pipeline: SG smoothing (window=20)
+│   ├── FRB_lensing_results_SG_100/   # Lensing pipeline: SG smoothing (window=100)
+│   └── FRB_lensing_results_G_3/      # Lensing pipeline: Gaussian smoothing (σ=3)
 │
 ├── fpbh_bound/                       # Constraint curves + combined plot
-│   ├── LSS.txt, Dynamical.txt, Accretion.txt, GWs.txt, Microlensing.txt
+│   ├── LSS.txt, Dynamical.txt, Accretion.txt, GWs.txt,
+│   │   Microlensing.txt, Evaporation.txt, Ly.txt
 │   ├── FRB_fpbh_vs_ML.txt            # f_PBH(M_L) data computed by this work
 │   └── fpbh.pdf                      # Multi-experiment combined exclusion plot
 │
+├── environment.yml                   # Conda environment spec
 ├── requirements.txt                  # Python dependencies
-├── .gitignore                        # Git ignore rules
+├── .gitignore
 ├── CITATION.cff                      # Academic citation metadata
 ├── LICENSE                           # MIT License
 └── README.md
@@ -255,24 +229,17 @@ Runs the full pipeline over 340 sources as implemented in `process_frb_catalog_l
 3. **SNR ordering cuts** – for every matched pair (i, j), require `SNR_i ≥ SNR_j` and `SNR_j ≥ 10`; additionally require the highest-SNR peak overall to be covered by at least one matched pair.
 4. **KS spectral-drift test** – extract peak spectra and compare with noise bootstrap samples via KS D-statistic; reject pairs with D > D_ci_upper (significantly drifting spectra).
 
-Outputs are written into multiple result directories under `Figures/`, each corresponding to a different smoothing configuration used in the pipeline:
+Outputs are written into multiple result directories under `Figures/`, each corresponding to a different smoothing configuration. The currently committed results are:
 
 | Directory | Smoothing Method | Parameter |
 |-----------|-----------------|-----------|
-| `Figures/FRB_lensing_results_SG_10/` | Savitzky–Golay | window = 10 |
 | `Figures/FRB_lensing_results_SG_20/` | Savitzky–Golay | window = 20 |
-| `Figures/FRB_lensing_results_SG_30/` | Savitzky–Golay | window = 30 |
 | `Figures/FRB_lensing_results_SG_100/` | Savitzky–Golay | window = 100 |
 | `Figures/FRB_lensing_results_G_3/` | Gaussian | σ = 3 |
 
-Each directory contains the following per-FRB files:
+Additional configurations (SG window=10, 30) can be generated by changing the `smooth_sigma` parameter in `SearchLensedFRB.py`.
 
-- `{FRB}_dynamic_spectrum.png` – 2D dynamic spectrum + time-series with peak labels
-- `{FRB}_autocorr.png` – ACF curve with detected spikes highlighted
-- `{FRB}_ks_heatmap.png` – N×N heatmap of KS D values between all peaks
-- `{FRB}_qq_matrix.png` – pairwise QQ plots for the same peak spectra
-- `{FRB}_report.txt` – plain-text report for each FRB
-- `lens_catalog_summary.csv` / `lens_analysis_summary.txt` – aggregate reports for the full run
+Each directory contains per-FRB outputs (dynamic spectrum PNG, ACF PNG, KS heatmap, QQ matrix, report.txt) and aggregate summaries (`lens_catalog_summary.csv`, `lens_analysis_summary.txt`).
 
 ### 4. Hardness-Ratio Consistency Test
 
@@ -293,7 +260,7 @@ Runs the hardness-ratio workflow for FRB 20190131D (see [Hardness_test.py](file:
   M_L (1+z_L) = (c³ Δt / 4G) · (R / (R-1)²)      [units: solar masses]
   ```
 
-Tunable parameters (at top of the script): `dt_ms`, `k`, `n_sigma` (1.0 → 68 %, 2.0 → 95 %, 3.0 → 99.7 %), `peak1_index`, `peak2_index`.
+Tunable parameters (at top of the script): `dt_ms`, `k`, `n_sigma` (1.0 → 68 %, 2.0 → 95 %, 3.0 → 99.7 %).
 
 ### 5. Sub-band Autocorrelation (ACF) Analysis
 
@@ -349,7 +316,7 @@ Two self-contained analysis scripts are provided for the strongest candidates:
 
 | File | Target FRB | Δt (ms) | Sub-band config | Analysis performed |
 |------|------------|---------|-----------------|--------------------|
-| `FRB20190131D.py` | FRB 20190131D | 8.82 | k_HR = 2 (4 bands) | HR consistency + sub-band ACF + estimated lens mass M_L(1+z_L) ≈ 466.5 M_sun |
+| `FRB20190131D.py` | FRB 20190131D | 8.82 | k_HR = 7 (9 bands) | HR consistency + sub-band ACF + estimated lens mass M_L(1+z_L) ≈ 466.5 M_sun |
 | `FRB20211115A.py` | FRB 20211115A | 6.86 | k_HR = 2 (4 bands) | HR consistency + sub-band ACF + scaled waveform superposition (peak2 → peak4) + M_L(1+z_L) ≈ 609 M_sun |
 
 In addition, [FRB20211115A.py](file:///home/ubuntu/Desktop/MICRO-FRB/FRB20211115A.py#L72-L262) contains an enhanced `plot_dynamic_spectrum()` that takes a user-specified time region, scales it by magnification factor `Rf=1.77`, shifts it horizontally and re-plots as a dashed red curve directly on top of the later peak — a visual check of the lensing "shape invariance" after noise-bias correction with `B2`.
@@ -440,44 +407,30 @@ Details in [modules/fpbh_data.py](file:///home/ubuntu/Desktop/MICRO-FRB/modules/
 
 ## Output Products
 
-After running the major scripts the repository contains the following primary results:
+After running the major scripts the repository produces:
 
 ```
 FRB_data/
   ├─ CHIME_cat2_frb/             # 7 catalog .npy files (raw + 6 subsets)
-  └─ canfar_downloads/           # 340 HDF5 dynamic spectra from CANFAR
+  └─ canfar_downloads/           # 340 HDF5 dynamic spectra (downloaded from CANFAR)
 Figures/
-  ├─ CHIME_cata2/                # frb_dm_width_snr.pdf, frb_redshift_distribution.pdf, frb_redshift_width_snr.pdf
-  ├─ canfar_downloads/           # 340 PDF dynamic spectrum plots from CANFAR
-  ├─ FRB_output_ds/              # 340 dynamic spectrum PDF outputs
-  ├─ FRB_autocorr/               # ~300 single-source ACF PNGs (all 340 FRBs processed)
-  ├─ FRB_drift/                  # Spectral drift KS heatmaps + QQ matrices per FRB
-  ├─ FRB_lensing_results_SG_10/  # Lensing pipeline output (SG window=10): dyn. spec. + ACF + KS + QQ + report
-  ├─ FRB_lensing_results_SG_20/  # Same with SG window=20
-  ├─ FRB_lensing_results_SG_100/ # Same with SG window=100
-  └─ FRB_lensing_results_G_3/   # Lensing pipeline output (Gaussian σ=3)
+  ├─ CHIME_cata2/                # Catalog-level plots (e.g. frb_redshift_width_snr.pdf)
+  └─ FRB_lensing_results_*/      # Lensing pipeline output per smoothing config:
+                                 #   SG_20, SG_100, G_3 (committed);
+                                 #   SG_10, SG_30 also available by re-running SearchLensedFRB.py
 fpbh_bound/
   ├─ FRB_fpbh_vs_ML.txt          # f_PBH(M_L) data computed from the FRB sample
   ├─ fpbh.pdf                    # Multi-experiment combined exclusion plot
-  ├─ LSS/Dynamical/Accretion/GWs/Microlensing.txt  # External experiment constraint curves (also Evaporation.txt, Ly.txt)
+  └─ *.txt                       # External experiment constraint curves
 ```
 
-Each lensing-result directory contains the following per-FRB files when a candidate passes the pipeline:
-
-- `{FRB}_dynamic_spectrum.png` – 2D dynamic spectrum + time-series with peak labels
-- `{FRB}_autocorr.png` – ACF curve with detected spikes highlighted
-- `{FRB}_ks_heatmap.png` – N×N heatmap of KS D values between all peaks
-- `{FRB}_qq_matrix.png` – Pairwise QQ plots for peak spectra
-- `{FRB}_report.txt` – Plain-text analysis report
-- `lens_catalog_summary.csv` / `lens_analysis_summary.txt` – Aggregate run reports
+Each lensing-result directory contains per-FRB outputs (dynamic spectrum PNG, ACF PNG, KS heatmap, QQ matrix, report.txt) and aggregate summaries (`lens_catalog_summary.csv`, `lens_analysis_summary.txt`).
 
 ---
 
 ## References
 - "Huan Zhou, Zhengxiang Li, Cheng-Gang Shao, et al. (2025). Evidence for Intermediate-Mass Black Holes From Microlensing Signatures in CHIME/FRB Catalog 2. arXiv:2605.19653"
-- **CHIME/FRB Catalog 2 Data Release (CANFAR)** –
-  <https://www.canfar.net/storage/list/AstroDataCitationDOI/CISTI.CANFAR/25.0066/data>
-- **Point-mass lensing time delay + PBH constraints** – please cite the specific references in your field (e.g., earlier works by Muñoz, Kashlinsky, Dai & Venumadhav, etc.; fill in the arXiv/DOI identifiers specific to your paper draft).
+- **CHIME/FRB Catalog 2 Data Release (CANFAR)** – <https://www.canfar.net/storage/list/AstroDataCitationDOI/CISTI.CANFAR/25.0066/data>
 - **colossus** cosmology library – <https://bdiemer.bitbucket.io/colossus/>
 
 ---
