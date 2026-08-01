@@ -440,8 +440,6 @@ Each lensing-result directory contains per-FRB outputs (dynamic spectrum PNG, AC
 - **Version**: v1.2.0
 - **Status**: actively maintained
 - **Changelog**:
-  - **v1.2.0**: Synchronized README with actual file deployment — added `FRB_data/canfar_downloads/` (340 HDF5 files) and `Figures/canfar_downloads/` (340 PDF files) to repository structure and output products; expanded `CHIME_cat2_frb/` listing to show all 7 `.npy` files; added `frb_redshift_distribution.pdf` to `CHIME_cata2/`; added reference paper arXiv:2605.19653 to References section.
-  - **v1.1.0**: Updated README to match latest repository structure — added 5 lensing pipeline result directories (SG windows 10/20/30/100, Gaussian σ=3), spectral drift analysis (`FRB_drift/`), dynamic spectrum outputs (`FRB_output_ds/`), removed obsolete `FRB_Plots.py` reference, updated ACF count to ~300 sources.
   - **v1.0.0**: Full initial release — CHIME/FRB Catalog 2 subsetting, 340-source lensing candidate pipeline, hardness-ratio test, sub-band ACF diagnostics, and combined f_PBH vs. other experiments plot.
 
 ---
