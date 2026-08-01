@@ -454,7 +454,6 @@ Figures/
   ├─ FRB_drift/                  # Spectral drift KS heatmaps + QQ matrices per FRB
   ├─ FRB_lensing_results_SG_10/  # Lensing pipeline output (SG window=10): dyn. spec. + ACF + KS + QQ + report
   ├─ FRB_lensing_results_SG_20/  # Same with SG window=20
-  ├─ FRB_lensing_results_SG_30/  # Same with SG window=30
   ├─ FRB_lensing_results_SG_100/ # Same with SG window=100
   └─ FRB_lensing_results_G_3/   # Lensing pipeline output (Gaussian σ=3)
 fpbh_bound/
