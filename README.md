@@ -437,7 +437,7 @@ Each lensing-result directory contains per-FRB outputs (dynamic spectrum PNG, AC
 
 ## Version History
 
-- **Version**: v1.2.0
+- **Version**: v1.0.0
 - **Status**: actively maintained
 - **Changelog**:
   - **v1.0.0**: Full initial release — CHIME/FRB Catalog 2 subsetting, 340-source lensing candidate pipeline, hardness-ratio test, sub-band ACF diagnostics, and combined f_PBH vs. other experiments plot.
