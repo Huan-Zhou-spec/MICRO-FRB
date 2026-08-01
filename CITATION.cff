@@ -2,20 +2,14 @@ cff-version: 1.0.0
 message: "If you use this software, please cite it as below."
 title: "Evidence for Intermediate-Mass Black Holes From Microlensing Signatures in CHIME/FRB Catalog 2"
 type: software
-repository-code: "https://github.com/LenFRB/Micro-Lensing_FRB"
+repository-code: "https://github.com/Huan-Zhou-spec/MICRO-FRB"
 version: "1.0.0"
-date-released: "2026-07-29"
+date-released: "2026-08-01"
 license: "MIT"
-url: "https://github.com/LenFRB/Micro-Lensing_FRB"
+url: "https://github.com/Huan-Zhou-spec/MICRO-FRB"
 authors:
   - family-names: "Zhou"
     given-names: "Huan"
-    orcid: ""
-  - family-names: "Li"
-    given-names: "Zhengxiang"
-    orcid: ""
-  - family-names: "Shao"
-    given-names: "Cheng-Gang"
     orcid: ""
 keywords:
   - fast radio burst
@@ -37,5 +31,13 @@ references:
         given-names: "Zhengxiang"
       - family-names: "Shao"
         given-names: "Cheng-Gang"
-    year: 2025
+      - family-names: "Wang"
+        given-names: "Xi-Jing"
+      - family-names: "Liao"
+        given-names: "Kai"
+      - family-names: "Gao"
+        given-names: "He"
+      - family-names: "Zhu"
+        given-names: "Zong-Hong"
+    year: 2026
     identifier: "arXiv:2605.19653"
