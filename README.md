@@ -152,7 +152,7 @@ pip install colossus
 cosmology.setCosmology('planck18')
 ```
 
-If `colossus` cannot be installed on your system, an equivalent implementation using `astropy.cosmology.FlatLambdaCDM` can be swapped in by replacing the `cosmo.comovingDistance` calls in [modules/fpbh_data.py](file:///home/ubuntu/桌面/LenFRB_test/课题7：FRB_catalog_2-PBH/Micro-Lensing_FRB/modules/fpbh_data.py).
+If `colossus` cannot be installed on your system, an equivalent implementation using `astropy.cosmology.FlatLambdaCDM` can be swapped in by replacing the `cosmo.comovingDistance` calls in [modules/fpbh_data.py](file:///home/ubuntu/Desktop/MICRO-FRB/modules/fpbh_data.py).
 
 ---
 
@@ -201,7 +201,7 @@ Micro-Lensing_FRB/
 │   └── FRB_lensing_results_G_3/      # Lensing pipeline with Gaussian smoothing (σ=3)
 │
 ├── fpbh_bound/                       # Constraint curves + combined plot
-│   ├── LSS.txt, DynEff.txt, acc.txt, LIGO.txt, OGLE.txt
+│   ├── LSS.txt, Dynamical.txt, Accretion.txt, GWs.txt, Microlensing.txt
 │   ├── FRB_fpbh_vs_ML.txt            # f_PBH(M_L) data computed by this work
 │   └── fpbh.pdf                      # Multi-experiment combined exclusion plot
 │
@@ -218,7 +218,7 @@ Micro-Lensing_FRB/
 
 ### 1. CHIME/FRB Catalog Sub-setting
 
-Invoke `data_spearate()` from [FRB_data.py](file:///home/ubuntu/桌面/LenFRB_test/课题7：FRB_catalog_2-PBH/Micro-Lensing_FRB/FRB_data.py#L24-L60):
+Invoke `data_spearate()` from [FRB_data.py](file:///home/ubuntu/Desktop/MICRO-FRB/FRB_data.py#L24-L60):
 
 ```bash
 python -c "from FRB_data import data_spearate; data_spearate()"
@@ -229,7 +229,7 @@ python -c "from FRB_data import data_spearate; data_spearate()"
 
 ### 2. Batch Download of CANFAR Dynamic Spectra
 
-The `data_load()` function is exposed as a `argparse` CLI in [FRB_data.py](file:///home/ubuntu/桌面/LenFRB_test/课题7：FRB_catalog_2-PBH/Micro-Lensing_FRB/FRB_data.py#L64-L171):
+The `data_load()` function is exposed as a `argparse` CLI in [FRB_data.py](file:///home/ubuntu/Desktop/MICRO-FRB/FRB_data.py#L64-L171):
 
 ```bash
 # Default: download PDF plots for the 340 multi-peaked FRBs
@@ -248,7 +248,7 @@ To switch to HDF5 raw data download instead, uncomment the corresponding `url` l
 python SearchLensedFRB.py
 ```
 
-Runs the full pipeline over 340 sources as implemented in `process_frb_catalog_lens()` / `analyze_lensing_candidate()` in [SearchLensedFRB.py](file:///home/ubuntu/桌面/LenFRB_test/课题7：FRB_catalog_2-PBH/Micro-Lensing_FRB/SearchLensedFRB.py#L27-L452). The per-source steps are:
+Runs the full pipeline over 340 sources as implemented in `process_frb_catalog_lens()` / `analyze_lensing_candidate()` in [SearchLensedFRB.py](file:///home/ubuntu/Desktop/MICRO-FRB/SearchLensedFRB.py#L27-L452). The per-source steps are:
 
 1. **ACF spike detection** – smooth the autocorrelation and threshold peaks to obtain candidate delays `Δt_candidate`.
 2. **Peak-pair matching** – cross-check each ACF spike with the actual spacing of the N highest-SNR peaks (± 2 ms tolerance).
@@ -280,7 +280,7 @@ Each directory contains the following per-FRB files:
 python Hardness_test.py
 ```
 
-Runs the hardness-ratio workflow for FRB 20190131D (see [Hardness_test.py](file:///home/ubuntu/桌面/LenFRB_test/课题7：FRB_catalog_2-PBH/Micro-Lensing_FRB/Hardness_test.py#L14-L109)):
+Runs the hardness-ratio workflow for FRB 20190131D (see [Hardness_test.py](file:///home/ubuntu/Desktop/MICRO-FRB/Hardness_test.py#L14-L109)):
 
 - Splits the observed CHIME bandpass into `k+2` contiguous sub-bands (default `k=3` → 5 bands).
 - Determines symmetric integer windows for each peak from the total-band FWHM.
@@ -297,7 +297,7 @@ Tunable parameters (at top of the script): `dt_ms`, `k`, `n_sigma` (1.0 → 68 %
 
 ### 5. Sub-band Autocorrelation (ACF) Analysis
 
-Both [FRB20190131D.py](file:///home/ubuntu/桌面/LenFRB_test/课题7：FRB_catalog_2-PBH/Micro-Lensing_FRB/FRB20190131D.py#L317-L483) and [FRB20211115A.py](file:///home/ubuntu/桌面/LenFRB_test/课题7：FRB_catalog_2-PBH/Micro-Lensing_FRB/FRB20211115A.py#L366-L532) include a `main()` that:
+Both [FRB20190131D.py](file:///home/ubuntu/Desktop/MICRO-FRB/FRB20190131D.py#L317-L483) and [FRB20211115A.py](file:///home/ubuntu/Desktop/MICRO-FRB/FRB20211115A.py#L366-L532) include a `main()` that:
 
 1. Slices the 2D dynamic spectrum to the CHIME-observed frequency range.
 2. Splits into `k_ACF = k_HR + 2` sub-bands, sums each sub-band over frequency → sub-band time series.
@@ -313,7 +313,7 @@ python FRB20211115A.py    # plots ACF for FRB 20211115A
 
 #### 6.1 Compute f_PBH(M_L) data points
 
-Un-comment the top example in [fpbh.py](file:///home/ubuntu/桌面/LenFRB_test/课题7：FRB_catalog_2-PBH/Micro-Lensing_FRB/fpbh.py#L13-L41) and run:
+Un-comment the top example in [fpbh.py](file:///home/ubuntu/Desktop/MICRO-FRB/fpbh.py#L13-L41) and run:
 
 ```python
 repeater_file     = 'FRB_data/CHIME_cat2_frb/chimefrbcat2_unique_first_repeaters.npy'
@@ -335,11 +335,11 @@ python fpbh.py
 
 Produces `fpbh_bound/fpbh.pdf`, a single log-log canvas that compares:
 
-- LSS       – Large Scale Structure (solid grey)
-- Dynamical – dynamical constraints (dashed grey)
-- Accretion – CMB-energy injection bounds (dash-dot grey)
-- GWs/LIGO  – Gravitational-wave merger rate (dashed grey + star marker)
-- OGLE      – Optical microlensing (dotted grey)
+- LSS          – Large Scale Structure (solid grey)
+- Dynamical    – dynamical constraints (dashed grey)
+- Accretion    – CMB-energy injection bounds (dash-dot grey)
+- GWs (LIGO)   – Gravitational-wave merger rate (dashed grey + star marker)
+- Microlensing – Optical microlensing (OGLE, dotted grey)
 - **FRB (this work)** – red solid line with filled exclusion region
 - **Inset zoom panel** – green horizontal band for FRB 20211115A; blue horizontal band for FRB 20190131D; connected via `ConnectionPatch` to the main plot region.
 
@@ -352,7 +352,7 @@ Two self-contained analysis scripts are provided for the strongest candidates:
 | `FRB20190131D.py` | FRB 20190131D | 8.82 | k_HR = 2 (4 bands) | HR consistency + sub-band ACF + estimated lens mass M_L(1+z_L) ≈ 466.5 M_sun |
 | `FRB20211115A.py` | FRB 20211115A | 6.86 | k_HR = 2 (4 bands) | HR consistency + sub-band ACF + scaled waveform superposition (peak2 → peak4) + M_L(1+z_L) ≈ 609 M_sun |
 
-In addition, [FRB20211115A.py](file:///home/ubuntu/桌面/LenFRB_test/课题7：FRB_catalog_2-PBH/Micro-Lensing_FRB/FRB20211115A.py#L72-L262) contains an enhanced `plot_dynamic_spectrum()` that takes a user-specified time region, scales it by magnification factor `Rf=1.77`, shifts it horizontally and re-plots as a dashed red curve directly on top of the later peak — a visual check of the lensing "shape invariance" after noise-bias correction with `B2`.
+In addition, [FRB20211115A.py](file:///home/ubuntu/Desktop/MICRO-FRB/FRB20211115A.py#L72-L262) contains an enhanced `plot_dynamic_spectrum()` that takes a user-specified time region, scales it by magnification factor `Rf=1.77`, shifts it horizontally and re-plots as a dashed red curve directly on top of the later peak — a visual check of the lensing "shape invariance" after noise-bias correction with `B2`.
 
 ---
 
@@ -434,7 +434,7 @@ Finally the Poisson-corrected upper bound (with N_len2=1, i.e. 68 % CL for zero 
 f_PBH(M_L) ≤ ln(1 − N_len2/N_src) / ln(1 − 1/N_src) · (1/τ_total)
 ```
 
-Details in [modules/fpbh_data.py](file:///home/ubuntu/桌面/LenFRB_test/课题7：FRB_catalog_2-PBH/Micro-Lensing_FRB/modules/fpbh_data.py#L25-L85).
+Details in [modules/fpbh_data.py](file:///home/ubuntu/Desktop/MICRO-FRB/modules/fpbh_data.py#L25-L85).
 
 ---
 
@@ -460,7 +460,7 @@ Figures/
 fpbh_bound/
   ├─ FRB_fpbh_vs_ML.txt          # f_PBH(M_L) data computed from the FRB sample
   ├─ fpbh.pdf                    # Multi-experiment combined exclusion plot
-  └─ LSS/DynEff/acc/LIGO/OGLE.txt  # External experiment constraint curves
+  ├─ LSS/Dynamical/Accretion/GWs/Microlensing.txt  # External experiment constraint curves (also Evaporation.txt, Ly.txt)
 ```
 
 Each lensing-result directory contains the following per-FRB files when a candidate passes the pipeline:
@@ -488,7 +488,7 @@ Each lensing-result directory contains the following per-FRB files when a candid
 - **Version**: v1.2.0
 - **Status**: actively maintained
 - **Changelog**:
-  - **v1.2.0**: Synchronized README with actual file deployment — added `FRB_data/canfar_downloads/` (340 HDF5 files) and `Figures/canfar_downloads/` (340 PDF files) to repository structure and output products; expanded `CHIME_cat2_frb/` listing to show all 7 `.npy` files; added `frb_redshift_distribution.pdf` to `CHIME_cata2/`; added reference paper `2605.19653v2.pdf` (arXiv:2605.19653) to structure tree and References section.
+  - **v1.2.0**: Synchronized README with actual file deployment — added `FRB_data/canfar_downloads/` (340 HDF5 files) and `Figures/canfar_downloads/` (340 PDF files) to repository structure and output products; expanded `CHIME_cat2_frb/` listing to show all 7 `.npy` files; added `frb_redshift_distribution.pdf` to `CHIME_cata2/`; added reference paper arXiv:2605.19653 to References section.
   - **v1.1.0**: Updated README to match latest repository structure — added 5 lensing pipeline result directories (SG windows 10/20/30/100, Gaussian σ=3), spectral drift analysis (`FRB_drift/`), dynamic spectrum outputs (`FRB_output_ds/`), removed obsolete `FRB_Plots.py` reference, updated ACF count to ~300 sources.
   - **v1.0.0**: Full initial release — CHIME/FRB Catalog 2 subsetting, 340-source lensing candidate pipeline, hardness-ratio test, sub-band ACF diagnostics, and combined f_PBH vs. other experiments plot.
 
