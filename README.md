@@ -24,7 +24,7 @@ This project selects multi-component Fast Radio Burst (FRB) candidates from the 
 - [Core Algorithms](#core-algorithms)
   - [Lensing-Candidate Selection Flow](#lensing-candidate-selection-flow)
   - [Hardness-Ratio Consistency](#hardness-ratio-consistency)
-  - [constraint on f_PBH](#f_pbh-limits-from-optical-depth)
+  - [Constraints on f_PBH](#constraints-on-f_pbh)
 - [Output Products](#output-products)
 - [References](#references)
 - [Version History](#version-history)
@@ -369,7 +369,7 @@ Input: FRB dynamic spectrum (F × T)
 
   we declare the pair to be consistent (PASS).
 
-### constraint on f_PBH
+### Constraints on f_PBH
 
 **Point-mass time-delay** between the close pair of images parametrised by `y_min ≤ y ≤ y_max`:
 
