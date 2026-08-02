@@ -25,7 +25,7 @@ frb_microlens/
 *.ipynb
 
 # OS
-.DS_Store
+#.DS_Store
 Thumbs.db
 
 # Large data files (uncomment if needed)
