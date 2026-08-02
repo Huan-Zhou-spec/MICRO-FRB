@@ -1,4 +1,4 @@
-# Micro-Lensing_FRB
+# Microlensing FRBs
 
 **Evidence for Intermediate-Mass Black Holes From Microlensing Signatures in CHIME/FRB Catalog 2** 
 
