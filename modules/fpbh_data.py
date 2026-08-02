@@ -78,7 +78,8 @@ def fpbh(ML, DM_vals, wi_vals, snr_vals):
         tautrack.append(ts)
     ttot = np.sum(tautrack)
     f = 1.0 / ttot if ttot > 0 else np.inf
-    #Nlen2=np.log(1/(1-0.95))
+    #Nlen2=np.log(1/(1-0.95)) # 95% 置信区间的fpbh值的上界
+    #Nlen2 = 1 #FRB20190131D/FRB20211115A为透镜系统的估计
     Nlen2 = 1
     f_up=np.log(1-Nlen2/len(DM_vals))/np.log(1-1/len(DM_vals))*f
     print(ML, f_up)
