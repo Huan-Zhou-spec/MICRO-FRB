@@ -12,15 +12,12 @@ authors:
     given-names: "Huan"
     orcid: ""
 keywords:
-  - fast radio burst
-  - FRB
-  - gravitational lensing
-  - microlensing
-  - primordial black hole
-  - PBH
+  - Fast Radio Burst
+  - Microlensing
+  - Primordial Black Hole
+  - Intermediate-Mass Black Holes
   - CHIME/FRB Catalog 2
-  - cosmic microwave background
-  - dark matter
+ 
 references:
   - type: article
     title: "Evidence for Intermediate-Mass Black Holes From Microlensing Signatures in CHIME/FRB Catalog 2"
