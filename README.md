@@ -112,7 +112,7 @@ Default download locations: `FRB_data/canfar_downloads/` (HDF5) or `Figures/canf
 
 ```bash
 conda env create -f environment.yml
-conda activate frb_microlens
+conda activate FRB_Microlens
 ```
 
 #### Method B: Pip / Virtual Environment
@@ -120,8 +120,8 @@ conda activate frb_microlens
 `requirements.txt` provides a minimal dependency list for pip-based setups (CI/CD, Docker, Google Colab):
 
 ```bash
-python -m venv frb_lens
-source frb_lens/bin/activate   # Linux/macOS
+python -m venv frb_microlens
+source frb_microlens/bin/activate   # Linux/macOS
 # frb_lens\Scripts\activate    # Windows
 pip install -r requirements.txt
 ```
@@ -129,15 +129,15 @@ pip install -r requirements.txt
 #### Method C: Manual Conda Setup
 
 ```bash
-conda create -n frb_lens python=3.11
-conda activate frb_lens
+conda create -n frb_microlens python=3.11
+conda activate frb_microlens
 conda install numpy scipy matplotlib pandas h5py
 pip install colossus
 ```
 
 ### Note on `colossus`
 
-`colossus` provides comoving-distance functions for the lensing optical-depth integral. If unavailable, an equivalent implementation using `astropy.cosmology.FlatLambdaCDM` can be swapped in via [modules/fpbh_data.py](file:///home/ubuntu/Desktop/MICRO-FRB/modules/fpbh_data.py).
+`colossus` provides comoving-distance functions for the lensing optical-depth integral. If unavailable, an equivalent implementation using `astropy.cosmology.FlatLambdaCDM` can be swapped in via [modules/fpbh_data.py].
 
 ---
 

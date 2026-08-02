@@ -1,4 +1,4 @@
-name: frb_microlens
+name: FRB_Microlens
 channels:
   - conda-forge
   - defaults
