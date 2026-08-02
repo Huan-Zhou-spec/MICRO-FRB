@@ -102,7 +102,7 @@ Default download locations: `FRB_data/canfar_downloads/` (HDF5) or `Figures/canf
 | 3 | `matplotlib` | >= 3.7 | conda / pip | All plotting (dynamic spectra, ACF, heatmaps, f_PBH curves) |
 | 4 | `pandas` | >= 2.0 | conda / pip | Tabular data handling, CSV export |
 | 5 | `h5py` | >= 3.8 | conda / pip | Reading HDF5 dynamic spectrum data |
-| 6 | `colossus` | >= 2.0.6 | **pip only** | Cosmological distances & Hubble parameter (Planck 2018) |
+| 6 | `colossus` | >= 2.0.6 | conda / pip | Cosmological distances & Hubble parameter (Planck 2018) |
 
 ### Installation — Choose One Method
 
