@@ -49,10 +49,10 @@ Fast Radio Bursts are millisecond-duration radio pulses of extragalactic origin.
 |--------|-------------|
 | **Catalog Sub-setting** | Splits the full 4539-source Catalog 2 into reusable subsets: repeaters / non-repeaters / first-repeaters / duplicate TNS-name entries / unique-source lists. |
 | **Batch Data Download** | Downloads both HDF5 dynamic spectra and PDF plots for the 340 multi-peaked FRBs directly from the CANFAR repository (urllib / wget / auto). |
-| **Lensing-Candidate Filter** | End-to-end pipeline: RFI cleaning → ACF spike detection → peak matching → SNR cuts → KS spectral-drift rejector. Runs with multiple smoothing configurations (SG windows 10/20/30/100, Gaussian σ=3). |
+| **Microlensing-Candidate Filter** | End-to-end pipeline: RFI cleaning → ACF spike detection → peak matching → SNR cuts → KS frequency-drift rejector. Runs with multiple smoothing configurations (SG windows 10/20/30/100, Gaussian σ=3). |
 | **Hardness-Ratio Test** | Splits the observed bandpass into **k+2 sub-bands**; compares the high/low hardness ratios HR between the two lensing-image windows at confidence nσ. |
 | **Sub-band ACF** | Computes independent autocorrelations for each sub-band and cross-checks that the delay spike aligns in all of them against the total-band reference. |
-| **f_PBH Constraints** | Numerically integrates the point-mass lensing optical depth (with colossus ΛCDM distance functions) and outputs the f_PBH upper bound vs. lens mass. |
+| **Constraints on f_PBH** | Numerically integrates the point-mass lensing optical depth (with colossus ΛCDM distance functions) and outputs the f_PBH upper bound vs. lens mass. |
 | **Plotting Suite** | Dynamic spectra (PDF + PNG with peak markers), KS drift heatmaps, QQ-matrices, ACF curves with spike markers, DM-width-SNR scatter plots, and the combined f_PBH multi-experiment limit plot. |
 
 ---
