@@ -159,8 +159,6 @@ Micro-Lensing_FRB/
 ├── SearchLensedFRB.py                # Step 3: batch lensing selection for 340 FRBs
 ├── Hardness_test.py                  # Step 4: single-source hardness-ratio demo (FRB 20190131D)
 ├── fpbh.py                           # Step 6: f_PBH vs. M_L summary plot
-├── FRB20190131D.py                   # Candidate 1 deep dive (HR + sub-band ACF + lens mass)
-├── FRB20211115A.py                   # Candidate 2 deep dive (HR + ACF + waveform superposition)
 │
 ├── FRB_data/
 │   ├── CHIME_cat2_frb/               # Catalog 2 data + subsets (.npy files)
@@ -264,7 +262,7 @@ Tunable parameters (at top of the script): `dt_ms`, `k`, `n_sigma` (1.0 → 68 %
 
 ### 5. Sub-band Autocorrelation (ACF) Analysis
 
-Both [FRB20190131D.py](file:///home/ubuntu/Desktop/MICRO-FRB/FRB20190131D.py#L317-L483) and [FRB20211115A.py](file:///home/ubuntu/Desktop/MICRO-FRB/FRB20211115A.py#L366-L532) include a `main()` that:
+[analyze_frb_candidate.py](file:///home/ubuntu/Desktop/MICRO-FRB/analyze_frb_candidate.py) includes a `run_acf_analysis()` function that:
 
 1. Slices the 2D dynamic spectrum to the CHIME-observed frequency range.
 2. Splits into `k_ACF = k_HR + 2` sub-bands, sums each sub-band over frequency → sub-band time series.
@@ -272,8 +270,8 @@ Both [FRB20190131D.py](file:///home/ubuntu/Desktop/MICRO-FRB/FRB20190131D.py#L31
 4. Plots all ACF curves overlaid; for the total-band curve highlights the detected spikes with grey ±2 ms shaded windows; for the sub-band curves, only spikes that fall within those shaded windows are individually marked, confirming a coherent delay across the band.
 
 ```bash
-python FRB20190131D.py    # plots ACF for FRB 20190131D
-python FRB20211115A.py    # plots ACF for FRB 20211115A
+python analyze_frb_candidate.py FRB20190131D    # HR + ACF for FRB 20190131D
+python analyze_frb_candidate.py FRB20211115A    # HR + ACF for FRB 20211115A
 ```
 
 ### 6. PBH Abundance Constraints & Summary Plot
@@ -312,14 +310,12 @@ Produces `fpbh_bound/fpbh.pdf`, a single log-log canvas that compares:
 
 ### 7. Deep-Dive Examples for Individual Candidates
 
-Two self-contained analysis scripts are provided for the strongest candidates:
+A unified analysis script is provided for the strongest candidates:
 
-| File | Target FRB | Δt (ms) | Sub-band config | Analysis performed |
-|------|------------|---------|-----------------|--------------------|
-| `FRB20190131D.py` | FRB 20190131D | 8.82 | k_HR = 7 (9 bands) | HR consistency + sub-band ACF + estimated lens mass M_L(1+z_L) ≈ 466.5 M_sun |
-| `FRB20211115A.py` | FRB 20211115A | 6.86 | k_HR = 2 (4 bands) | HR consistency + sub-band ACF + scaled waveform superposition (peak2 → peak4) + M_L(1+z_L) ≈ 609 M_sun |
-
-In addition, [FRB20211115A.py](file:///home/ubuntu/Desktop/MICRO-FRB/FRB20211115A.py#L72-L262) contains an enhanced `plot_dynamic_spectrum()` that takes a user-specified time region, scales it by magnification factor `Rf=1.77`, shifts it horizontally and re-plots as a dashed red curve directly on top of the later peak — a visual check of the lensing "shape invariance" after noise-bias correction with `B2`.
+| File | Usage | Target FRB | Δt (ms) | Sub-band config | Analysis performed |
+|------|-------|------------|---------|-----------------|--------------------|
+| [analyze_frb_candidate.py](file:///home/ubuntu/Desktop/MICRO-FRB/analyze_frb_candidate.py) | `python FRB 20190131D.py` | FRB 20190131D | 8.82 | k_HR = 7 (9 bands) | HR consistency + sub-band ACF + estimated lens mass M_L(1+z_L) ≈ 466.5 M_sun |
+| (same script) | `python FRB20211115A.py` | FRB 20211115A | 6.86 | k_HR = 2 (4 bands) | HR consistency + sub-band ACF + scaled waveform superposition (peak2 → peak4) + M_L(1+z_L) ≈ 609 M_sun |
 
 ---
 
